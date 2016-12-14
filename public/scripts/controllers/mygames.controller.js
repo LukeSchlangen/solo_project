@@ -1,4 +1,4 @@
-myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', function ($http, $firebaseAuth, DataFactory) {
+myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', '$scope', function ($http, $firebaseAuth, DataFactory, $scope) {
   console.log('mygamescontroller running');
   var self = this;
   self.newGame = {}
@@ -7,30 +7,16 @@ myApp.controller('MyGamesController', ['$http', '$firebaseAuth', 'DataFactory', 
   getGames();
 
   function getGames() {
-    return function(){
         DataFactory.getGames().then(function (response) { //was updateGames
-          console.log('returned to controller from factory', response);
+          console.log('returned to controller from factory', response); // logs
           self.games = response;
+          $scope.$apply();
         });
-      }
   } //end getgames function
 
 
   self.addGame = function () {
-    // Give our new object to the factory to store on the server
-    DataFactory.addGame(self.newGame).then(getGames());
+    DataFactory.addGame(self.newGame).then(getGames);
   }
 
 }]); //end controller
-
-
-
-
-
-//     $http.get('/myGames')
-//     .then(function(response) {
-//       console.log('response.data: ', response.data);
-//       self.games = response.data;
-//     });
-//   }
-// }]);
