@@ -19,8 +19,8 @@ router.get('/', function(req, res){
         res.sendStatus(500);
       } else {
         if(results.rowCount === 0) {
-          console.log('No user found with that email. Email: ', req.decodedToken.email);
-          res.sendStatus(403);
+          console.log('No games found for user with that email. Email: ', userEmail);
+          res.sendStatus(400);
         } else {
           console.log(results.rows);
           res.send(results.rows);
@@ -68,7 +68,7 @@ router.post('/', function(req, res) {
               return;
             } else {
               if(results.rowCount === 0) {
-                console.log('No user found with that email. Email: ', req.decodedToken.email);
+                console.log('No user found with that email. Email: ', userEmail);
                 res.sendStatus(403);
                 return;
               } else {
